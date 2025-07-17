@@ -1,0 +1,57 @@
+{
+	"name": "altkit",
+	"displayName": "ALTKit",
+	"description": "A toolkit with useful commands for everyday text manipulation.",
+	"version": "0.0.5",
+	"engines": {"vscode": "^1.102.0"},
+	"categories": ["Other"],
+	"activationEvents": [],
+	"main": "./extension.js",
+	"contributes": {
+		"commands": [
+			{"command":"altkit.showAllCommands","title":"ALTKit: Show All Commands"},
+			{"command":"altkit.toggleStatusBar","title":"ALTKit: Toggle Selection Stats in Status Bar"},
+			{"command":"altkit.shuffle","title":"ALTKit: Shuffle"},
+			{"command":"altkit.toCamelCase","title":"ALTKit: To Camel Case"},
+			{"command":"altkit.htmlDeentities","title":"ALTKit: HTML De-entities"},
+			{"command":"altkit.stripHtml","title":"ALTKit: Strip HTML"},
+			{"command":"altkit.randomString15","title":"ALTKit: Random String (15 chars)"},
+			{"command":"altkit.randomString30","title":"ALTKit: Random String (30 chars)"},
+			{"command":"altkit.timestampToDate","title":"ALTKit: Convert Timestamp to Date"},
+			{"command":"altkit.dateToTimestamp","title":"ALTKit: Convert Date to Timestamp"},
+			{"command":"altkit.deduplicateLines","title":"ALTKit: De-duplicate uniq Lines"},
+			{"command":"altkit.deduplicateLinesTable","title":"ALTKit: De-duplicate uniq Lines (Table view)"},
+			{"command":"altkit.eval","title":"ALTKit: Eval JavaScript"},
+			{"command":"altkit.base64Encode","title":"ALTKit: Base64 Encode"},
+			{"command":"altkit.base64Decode","title":"ALTKit: Base64 Decode"},
+			{"command":"altkit.md5","title":"ALTKit: MD5 Hash"},
+			{"command":"altkit.sha1","title":"ALTKit: SHA1 Hash"},
+			{"command":"altkit.sha256","title":"ALTKit: SHA256 Hash"},
+			{"command":"altkit.toUpperCase","title":"ALTKit: To Upper Case"},
+			{"command":"altkit.toLowerCase","title":"ALTKit: To Lower Case"},
+			{"command":"altkit.capitalize","title":"ALTKit: Capitalize"},
+			{"command":"altkit.sortLinesAsc","title":"ALTKit: Sort Lines (Ascending)"},
+			{"command":"altkit.sortLinesDesc","title":"ALTKit: Sort Lines (Descending)"},
+			{"command":"altkit.urlEncode","title":"ALTKit: URL Encode"},
+			{"command":"altkit.urlDecode","title":"ALTKit: URL Decode"},
+			{"command":"altkit.jsonMinify","title":"ALTKit: JSON Minify"},
+			{"command":"altkit.jsonPretty","title":"ALTKit: JSON Prettify"}
+		],
+		"keybindings": [
+			{"command":"altkit.showAllCommands","key":"ctrl+shift+9","mac":"cmd+shift+9","when":"editorTextFocus"}
+		]
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.102.0",
+		"@types/mocha": "^10.0.10",
+		"@types/node": "20.x",
+		"eslint": "^9.25.1",
+		"@vscode/test-cli": "^0.0.11",
+		"@vscode/test-electron": "^2.5.2"
+	}
+}
