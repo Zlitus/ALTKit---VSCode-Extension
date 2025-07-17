@@ -4,7 +4,7 @@
 	"description": "A toolkit with useful commands for everyday text manipulation.",
 	"repository": {"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"},
 	"license": "MIT",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"publisher": "ArnaudLefort",
 	"engines": {"vscode": "^1.102.0"},
 	"categories": ["Other"],
