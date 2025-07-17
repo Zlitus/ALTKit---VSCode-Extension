@@ -117,6 +117,106 @@ const activate = (context) => {
 		statusBarItem.show();
 	};
 
+	const incrementSelectionDisposable = vscode.commands.registerCommand('altkit.incrementSelection', () => {
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) { return; }
+
+		const {document, selections} = editor;
+		let items;
+		let isMultiLineSelection = false;
+		let rangeToReplace;
+
+		if (selections.length === 1 && !selections[0].isEmpty) {
+			const selection = selections[0];
+			const text = document.getText(selection);
+			const lines = text.split(/\r?\n/);
+			if (lines.filter(l => l.length > 0).length > 1) {
+				items = lines;
+				isMultiLineSelection = true;
+				rangeToReplace = selection;
+			}
+		}
+
+		if (!isMultiLineSelection && selections.length > 1) {
+			items = selections.map(s => document.getText(s));
+		}
+
+		if (!items) {
+			vscode.window.showInformationMessage('Please make at least two selections to use increment.');
+			return;
+		}
+
+		const letterToNumber = (str) => {
+			let num = 0;
+			for (let i = 0; i < str.length; i++) {
+				num = num * 26 + (str.charCodeAt(i) - 'a'.charCodeAt(0) + 1);
+			}
+			return num - 1;
+		};
+		const numberToLetter = (num) => {
+			let str = '';
+			let t;
+
+			while (num >= 0) {
+				t = num % 26;
+				str = String.fromCharCode(t + 'a'.charCodeAt(0)) + str;
+				num = Math.floor(num / 26) - 1;
+			}
+			return str;
+		};
+
+		const firstItem = items[0];
+
+		editor.edit(editBuilder => {
+			const asNumber = parseInt(firstItem, 10);
+			if (!isNaN(asNumber) && asNumber.toString() === firstItem) {
+				const results = items.map((_, i) => `${asNumber + i}`);
+				if (isMultiLineSelection) {
+					editBuilder.replace(rangeToReplace, results.join('\n'));
+				} else {
+					selections.forEach((selection, i) => editBuilder.replace(selection, results[i]));
+				}
+				return;
+			}
+
+			if (/^[a-zA-Z]+$/.test(firstItem)) {
+				const isUpperCase = firstItem.toUpperCase() === firstItem;
+				const startNumber = letterToNumber(firstItem.toLowerCase());
+				const results = items.map((_, i) => {
+					let result = numberToLetter(startNumber + i);
+					return isUpperCase ? result.toUpperCase() : result;
+				});
+
+				if (isMultiLineSelection) {
+					editBuilder.replace(rangeToReplace, results.join('\n'));
+				} else {
+					selections.forEach((selection, i) => editBuilder.replace(selection, results[i]));
+				}
+				return;
+			}
+
+			vscode.window.showErrorMessage('Increment requires that the first selection/line be an integer or a string of letters (a-z, A-Z).');
+		});
+	});
+
+	const slugifyDisposable = vscode.commands.registerCommand('altkit.slugify', createCommandHandler(text => {
+		const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
+		const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------';
+		const p = new RegExp(a.split('').join('|'), 'g');
+
+		return text.toString().toLowerCase()
+			.replace(/\s+/g, '-')
+			.replace(p, c => b.charAt(a.indexOf(c)))
+			.replace(/&/g, '-and-')
+			.replace(/[^\w\-]+/g, '')
+			.replace(/\-\-+/g, '-')
+			.replace(/^-+/, '')
+			.replace(/-+$/, '')
+		;
+	}));
+
+	const insertTimestampDisposable = vscode.commands.registerCommand('altkit.insertTimestamp', createReplacementHandler(() => `${Math.floor(Date.now() / 1000)}`));
+	const insertMilliTimestampDisposable = vscode.commands.registerCommand('altkit.insertMilliTimestamp', createReplacementHandler(() => `${Math.floor(Date.now())}`));
 	const timestampToDateDisposable = vscode.commands.registerCommand('altkit.timestampToDate', createCommandHandler(text => {
 		const timestamp = parseInt(text, 10);
 		if (isNaN(timestamp)) throw new Error('Selection is not a valid timestamp.');
@@ -192,7 +292,7 @@ const activate = (context) => {
 			});
 		}
 	});
-	
+
 	const shuffleDisposable = vscode.commands.registerCommand('altkit.shuffle', createCommandHandler(text => {
 		if (text.includes('\n')) {
 			return shuffleArray(text.split(/\r?\n/)).join('\n');
@@ -247,7 +347,11 @@ const activate = (context) => {
 	const showAllCommandsDisposable = vscode.commands.registerCommand('altkit.showAllCommands', async () => {
 		const commands = [
 			{label: 'Toggle Selection Stats in Status Bar', detail: 'Shows/hides selection stats in the status bar.', commandId: 'altkit.toggleStatusBar'},
+			{label: 'Increment Selection', detail: 'Increments numbers or letters based on the first selection.', commandId: 'altkit.incrementSelection'},
+			{label: 'Insert Current Timestamp', detail: 'Replaces selection with the current Unix timestamp.', commandId: 'altkit.insertTimestamp'},
+			{label: 'Insert Current Milli Timestamp', detail: 'Replaces selection with the current Unix milli timestamp.', commandId: 'altkit.insertMilliTimestamp'},
 			{label: 'Shuffle', detail: 'Shuffles selected lines, words, or letters.', commandId: 'altkit.shuffle'},
+			{label: 'Slugify', detail: 'Converts selection to a URL-friendly slug.', commandId: 'altkit.slugify'},
 			{label: 'Eval JavaScript', detail: 'Evaluates the selected JavaScript code.', commandId: 'altkit.eval'},
 			{label: 'JSON Minify', detail: 'Minifies the selected JSON.', commandId: 'altkit.jsonMinify'},
 			{label: 'JSON Prettify', detail: 'Formats the selected JSON nicely.', commandId: 'altkit.jsonPretty'},
@@ -294,7 +398,8 @@ const activate = (context) => {
 		showAllCommandsDisposable, toggleStatusBarDisposable, statusBarItem,
 		onSelectionChangeDisposable, onEditorChangeDisposable, shuffleDisposable,
 		toCamelCaseDisposable, htmlDeentitiesDisposable, stripHtmlDisposable,
-		randomString15Disposable, randomString30Disposable
+		randomString15Disposable, randomString30Disposable, slugifyDisposable,
+		insertTimestampDisposable, insertMilliTimestampDisposable, incrementSelectionDisposable
 	);
 };
 

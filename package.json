@@ -5,6 +5,7 @@
 	"repository": {"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"},
 	"license": "MIT",
 	"version": "0.0.5",
+	"publisher": "ArnaudLefort",
 	"engines": {"vscode": "^1.102.0"},
 	"categories": ["Other"],
 	"activationEvents": [],
@@ -13,6 +14,10 @@
 		"commands": [
 			{"command":"altkit.showAllCommands","title":"ALTKit: Show All Commands"},
 			{"command":"altkit.toggleStatusBar","title":"ALTKit: Toggle Selection Stats in Status Bar"},
+			{"command":"altkit.slugify","title": "ALTKit: Slugify"},
+			{"command":"altkit.insertTimestamp","title": "ALTKit: Insert Current Timestamp"},
+			{"command":"altkit.insertMilliTimestamp","title": "ALTKit: Insert Current Milli Timestamp"},
+			{"command":"altkit.incrementSelection","title": "ALTKit: Increment Selection"},
 			{"command":"altkit.shuffle","title":"ALTKit: Shuffle"},
 			{"command":"altkit.toCamelCase","title":"ALTKit: To Camel Case"},
 			{"command":"altkit.htmlDeentities","title":"ALTKit: HTML De-entities"},

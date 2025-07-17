@@ -12,11 +12,13 @@
 - `To Camel Case` – Convert to `camelCase`
 - `Capitalize` – Capitalize each word
 - `To Upper Case` / `To Lower Case`
+- `Slugify`
 
 ### 🧠 Utilities
 - `Eval JavaScript` – Evaluate selected JavaScript
 - `Shuffle` – Shuffle letters, words, or lines
 - `Toggle Selection Stats in Status Bar` – View stats like word count, line count, and numeric figures (sum, avg, min, max)
+- `Increment Selection` – Increment numbers or letters in the selection. E.g. `1, 1, 1` becomes `1, 2, 3`, or `B, X, Z` becomes `B, C, D`.
 
 ### 🔁 Encoding & Decoding
 - `Base64 Encode` / `Base64 Decode`
@@ -28,8 +30,8 @@
 - `MD5`, `SHA1`, `SHA256` – Compute secure hashes of selected text
 
 ### 📅 Time Tools
-- `Convert Timestamp to Date`
-- `Convert Date to Timestamp`
+- `Insert Current Timestamp` / `Insert Current Milli Timestamp`
+- `Convert Timestamp to Date` / `Convert Date to Timestamp`
 
 ### 📄 JSON Helpers
 - `JSON Minify` – Minify selected JSON
