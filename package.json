@@ -42,7 +42,7 @@
 			{"command":"altkit.urlEncode","title":"ALTKit: URL Encode"},
 			{"command":"altkit.urlDecode","title":"ALTKit: URL Decode"},
 			{"command":"altkit.jsonMinify","title":"ALTKit: JSON Minify"},
-			{"command":"altkit.jsonPretty","title":"ALTKit: JSON Prettify"}
+			{"command":"altkit.jsonPrettify","title":"ALTKit: JSON Prettify"}
 		],
 		"keybindings": [
 			{"command":"altkit.showAllCommands","key":"ctrl+shift+9","mac":"cmd+shift+9","when":"editorTextFocus"}
