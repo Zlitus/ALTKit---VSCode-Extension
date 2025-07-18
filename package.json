@@ -55,6 +55,14 @@
 				"title": "ALTKit: Converts HTML entities to characters"
 			},
 			{
+				"command": "altkit.html2markdown",
+				"title": "ALTKit: Converts HTML to Markdown"
+			},
+			{
+				"command": "altkit.markdown2html",
+				"title": "ALTKit: Converts Markdown to HTML"
+			},
+			{
 				"command": "altkit.slugify",
 				"title": "ALTKit: Converts selection to a URL-friendly slug"
 			},
@@ -136,7 +144,7 @@
 			},
 			{
 				"command": "altkit.stripHtml",
-				"title": "ALTKit: Removes HTML tags from selection"
+				"title": "ALTKit: Removes HTML tags from selection, preserving line breaks and preformatted blocks"
 			},
 			{
 				"command": "altkit.stripMarkdown",
