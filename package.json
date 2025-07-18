@@ -2,61 +2,181 @@
 	"name": "altkit",
 	"displayName": "ALTKit",
 	"description": "A toolkit with useful commands for everyday text manipulation.",
-	"repository": {"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"},
+	"repository": {
+		"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"
+	},
 	"license": "MIT",
 	"version": "0.0.6",
 	"publisher": "ArnaudLefort",
-	"engines": {"vscode": "^1.102.0"},
-	"categories": ["Other"],
+	"engines": {
+		"vscode": "^1.102.0"
+	},
+	"categories": [
+		"Other"
+	],
 	"activationEvents": [],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
-			{"command":"altkit.showAllCommands","title":"ALTKit: Show All Commands"},
-			{"command":"altkit.capitalize","title":"ALTKit: Capitalizes each word in the selection"},
-			{"command":"altkit.cleanText","title":"ALTKit: Cleans text by removing non-printable characters and extra whitespace"},
-			{"command":"altkit.md5","title":"ALTKit: Computes the MD5 hash of the selection"},
-			{"command":"altkit.sha1","title":"ALTKit: Computes the SHA1 hash of the selection"},
-			{"command":"altkit.sha256","title":"ALTKit: Computes the SHA256 hash of the selection"},
-			{"command":"altkit.dateToTimestamp","title":"ALTKit: Converts a selected date string to a Unix timestamp"},
-			{"command":"altkit.timestampToDate","title":"ALTKit: Converts a selected Unix timestamp to a UTC date string"},
-			{"command":"altkit.htmlDeentities","title":"ALTKit: Converts HTML entities to characters"},
-			{"command":"altkit.slugify","title":"ALTKit: Converts selection to a URL-friendly slug"},
-			{"command":"altkit.toCamelCase","title":"ALTKit: Converts selection to camelCase"},
-			{"command":"altkit.toLowerCase","title":"ALTKit: Converts the selection to lowercase"},
-			{"command":"altkit.toUpperCase","title":"ALTKit: Converts the selection to uppercase"},
-			{"command":"altkit.deduplicateLinesTable","title":"ALTKit: Counts line occurrences and displays a summary table"},
-			{"command":"altkit.base64Decode","title":"ALTKit: Decodes the Base64 selection"},
-			{"command":"altkit.aesDecrypt","title":"ALTKit: Decrypts selection with AES-256-CBC"},
-			{"command":"altkit.base64Encode","title":"ALTKit: Encodes the selection to Base64"},
-			{"command":"altkit.aesEncrypt","title":"ALTKit: Encrypts selection with AES-256-CBC"},
-			{"command":"altkit.eval","title":"ALTKit: Evaluates the selected JavaScript code"},
-			{"command":"altkit.jsonPrettify","title":"ALTKit: Formats the selected JSON nicely"},
-			{"command":"altkit.incrementSelection","title":"ALTKit: Increments numbers or letters based on the first selection"},
-			{"command":"altkit.insertDateTime","title":"ALTKit: Insert current ISO date/time"},
-			{"command":"altkit.insertMilliTimestamp","title":"ALTKit: Insert current Unix milli timestamp"},
-			{"command":"altkit.insertTimestamp","title":"ALTKit: Insert current Unix timestamp"},
-			{"command":"altkit.joinLines","title":"ALTKit: Joins selected lines with a comma and space"},
-			{"command":"altkit.jsonMinify","title":"ALTKit: Minifies the selected JSON"},
-			{"command":"altkit.deduplicateLines","title":"ALTKit: Removes duplicate lines from the selection or document"},
-			{"command":"altkit.stripHtml","title":"ALTKit: Removes HTML tags from selection"},
-			{"command":"altkit.stripMarkdown","title":"ALTKit: Removes Markdown formatting from the selection"},
-			{"command":"altkit.generateUUID","title":"ALTKit: Replaces selection with a new UUID"},
-			{"command":"altkit.randomString15","title":"ALTKit: Replaces selection with a random 15-character string"},
-			{"command":"altkit.randomString30","title":"ALTKit: Replaces selection with a random 30-character string"},
-			{"command":"altkit.toggleStatusBar","title":"ALTKit: Shows/hides selection stats in the status bar"},
-			{"command":"altkit.shuffle","title":"ALTKit: Shuffles selected lines, words, or letters"},
-			{"command":"altkit.sortLinesAsc","title":"ALTKit: Sorts the selected lines alphabetically"},
-			{"command":"altkit.sortLinesDesc","title":"ALTKit: Sorts the selected lines in reverse alphabetical order"}
+			{
+				"command": "altkit.showAllCommands",
+				"title": "ALTKit: Show All Commands"
+			},
+			{
+				"command": "altkit.capitalize",
+				"title": "ALTKit: Capitalizes each word in the selection"
+			},
+			{
+				"command": "altkit.cleanText",
+				"title": "ALTKit: Cleans text by removing non-printable characters and extra whitespace"
+			},
+			{
+				"command": "altkit.md5",
+				"title": "ALTKit: Computes the MD5 hash of the selection"
+			},
+			{
+				"command": "altkit.sha1",
+				"title": "ALTKit: Computes the SHA1 hash of the selection"
+			},
+			{
+				"command": "altkit.sha256",
+				"title": "ALTKit: Computes the SHA256 hash of the selection"
+			},
+			{
+				"command": "altkit.dateToTimestamp",
+				"title": "ALTKit: Converts a selected date string to a Unix timestamp"
+			},
+			{
+				"command": "altkit.timestampToDate",
+				"title": "ALTKit: Converts a selected Unix timestamp to a UTC date string"
+			},
+			{
+				"command": "altkit.htmlDeentities",
+				"title": "ALTKit: Converts HTML entities to characters"
+			},
+			{
+				"command": "altkit.slugify",
+				"title": "ALTKit: Converts selection to a URL-friendly slug"
+			},
+			{
+				"command": "altkit.toCamelCase",
+				"title": "ALTKit: Converts selection to camelCase"
+			},
+			{
+				"command": "altkit.toLowerCase",
+				"title": "ALTKit: Converts the selection to lowercase"
+			},
+			{
+				"command": "altkit.toUpperCase",
+				"title": "ALTKit: Converts the selection to uppercase"
+			},
+			{
+				"command": "altkit.deduplicateLinesTable",
+				"title": "ALTKit: Counts line occurrences and displays a summary table"
+			},
+			{
+				"command": "altkit.base64Decode",
+				"title": "ALTKit: Decodes the Base64 selection"
+			},
+			{
+				"command": "altkit.aesDecrypt",
+				"title": "ALTKit: Decrypts selection with AES-256-CBC"
+			},
+			{
+				"command": "altkit.base64Encode",
+				"title": "ALTKit: Encodes the selection to Base64"
+			},
+			{
+				"command": "altkit.aesEncrypt",
+				"title": "ALTKit: Encrypts selection with AES-256-CBC"
+			},
+			{
+				"command": "altkit.eval",
+				"title": "ALTKit: Evaluates the selected JavaScript code"
+			},
+			{
+				"command": "altkit.jsonPrettify",
+				"title": "ALTKit: Formats the selected JSON nicely"
+			},
+			{
+				"command": "altkit.incrementSelection",
+				"title": "ALTKit: Increments numbers or letters based on the first selection"
+			},
+			{
+				"command": "altkit.insertDateTime",
+				"title": "ALTKit: Insert current ISO date/time"
+			},
+			{
+				"command": "altkit.insertMilliTimestamp",
+				"title": "ALTKit: Insert current Unix milli timestamp"
+			},
+			{
+				"command": "altkit.insertTimestamp",
+				"title": "ALTKit: Insert current Unix timestamp"
+			},
+			{
+				"command": "altkit.joinLines",
+				"title": "ALTKit: Joins selected lines with a comma and space"
+			},
+			{
+				"command": "altkit.jsonMinify",
+				"title": "ALTKit: Minifies the selected JSON"
+			},
+			{
+				"command": "altkit.deduplicateLines",
+				"title": "ALTKit: Removes duplicate lines from the selection or document"
+			},
+			{
+				"command": "altkit.stripHtml",
+				"title": "ALTKit: Removes HTML tags from selection"
+			},
+			{
+				"command": "altkit.stripMarkdown",
+				"title": "ALTKit: Removes Markdown formatting from the selection"
+			},
+			{
+				"command": "altkit.generateUUID",
+				"title": "ALTKit: Replaces selection with a new UUID"
+			},
+			{
+				"command": "altkit.randomString15",
+				"title": "ALTKit: Replaces selection with a random 15-character string"
+			},
+			{
+				"command": "altkit.randomString30",
+				"title": "ALTKit: Replaces selection with a random 30-character string"
+			},
+			{
+				"command": "altkit.toggleStatusBar",
+				"title": "ALTKit: Shows/hides selection stats in the status bar"
+			},
+			{
+				"command": "altkit.shuffle",
+				"title": "ALTKit: Shuffles selected lines, words, or letters"
+			},
+			{
+				"command": "altkit.sortLinesAsc",
+				"title": "ALTKit: Sorts the selected lines alphabetically"
+			},
+			{
+				"command": "altkit.sortLinesDesc",
+				"title": "ALTKit: Sorts the selected lines in reverse alphabetical order"
+			}
 		],
 		"keybindings": [
-			{"command":"altkit.showAllCommands","key":"ctrl+shift+9","mac":"cmd+shift+9","when":"editorTextFocus"}
+			{
+				"command": "altkit.showAllCommands",
+				"key": "ctrl+shift+9",
+				"mac": "cmd+shift+9",
+				"when": "editorTextFocus"
+			}
 		]
 	},
 	"scripts": {
 		"lint": "eslint .",
 		"pretest": "npm run lint",
-		"test": "vscode-test"
+		"test": "vscode-test",
+		"update-commands": "node scripts/generate-commands.js"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.102.0",

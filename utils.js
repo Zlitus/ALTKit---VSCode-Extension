@@ -1,5 +1,10 @@
 const vscode = require('vscode');
 
+// If in generator mode, prepare a global array to store commands.
+if (process.env.ALTKIT_GEN_MODE === 'true') {
+	global.altkitCommands = [];
+}
+
 const commandRegistry = new Map();
 
 const createCommandHandler = (transformation, description) => {
@@ -25,16 +30,23 @@ const createCommandHandler = (transformation, description) => {
 	return handler;
 };
 
-const registerCommand = (context, commandId, handler) => {
-	if (handler.description) {
-		commandRegistry.set(commandId, handler.description);
+const registerCommand = (context, commandId, handler, description) => {
+	const desc = description || (handler && handler.description);
+
+	if (process.env.ALTKIT_GEN_MODE === 'true') {
+		if (commandId && desc) {
+			global.altkitCommands.push({ command: commandId, description: desc });
+		}
+		return;
 	}
+
+	if (desc) { commandRegistry.set(commandId, desc); }
 	const disposable = vscode.commands.registerCommand(commandId, handler);
 	context.subscriptions.push(disposable);
 };
 
-const createReplacementHandler = generator => {
-	return () => {
+const createReplacementHandler = (generator, description) => {
+	const handler = () => {
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
 			editor.edit(editBuilder => {
@@ -44,10 +56,12 @@ const createReplacementHandler = generator => {
 			});
 		}
 	};
+	handler.description = description || null;
+	return handler;
 };
 
-const createLineCommandHandler = lineTransformation => {
-	return () => {
+const createLineCommandHandler = (lineTransformation, description) => {
+	const handler = () => {
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
 			const {document, selections} = editor;
@@ -62,6 +76,8 @@ const createLineCommandHandler = lineTransformation => {
 			});
 		}
 	};
+	handler.description = description || null;
+	return handler;
 };
 
 const shuffleArray = array => {
