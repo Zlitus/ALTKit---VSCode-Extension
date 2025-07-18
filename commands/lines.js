@@ -68,6 +68,17 @@ const register = context => {
 		}
 	};
 	registerCommand(context, 'altkit.deduplicateLinesTable', deduplicateLinesTableHandler, 'Counts line occurrences and displays a summary table.');
+
+	const reverseHandler = createCommandHandler(text => {
+		if (text.includes('\n')) {
+			return text.split(/\r?\n/).reverse().join('\n')
+		} else if (text.trim().includes(' ')) {
+			return text.split(' ').reverse().join(' ')
+		} else {
+			return text.split('').reverse().join('')
+		}
+	})
+	registerCommand(context, 'altkit.reverse', reverseHandler, 'Reverses selected lines, words, or characters.');
 };
 
 module.exports = {register};

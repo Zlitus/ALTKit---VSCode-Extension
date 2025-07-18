@@ -16,6 +16,9 @@ const register = context => {
 	registerCommand(context, 'altkit.cleanText', createCommandHandler(text => {
 		return text.replace(/[^\x20-\x7E\n\r\t]/g, '').replace(/\s{2,}/g, ' ').trim();
 	}, 'Cleans text by removing non-printable characters and extra whitespace.'));
+
+	registerCommand(context, 'altkit.singleQuote', createCommandHandler(text => `'${text.replace(/'/g, '\\\'')}'`), 'Enquotes the selection in single quotes.');
+	registerCommand(context, 'altkit.doubleQuote', createCommandHandler(text => `"${text.replace(/"/g, '\\"')}"`), 'Enquotes the selection in double quotes.');
 };
 
 module.exports = {register};

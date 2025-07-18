@@ -91,6 +91,14 @@
 				"title": "ALTKit: Encrypts selection with AES-256-CBC"
 			},
 			{
+				"command": "altkit.doubleQuote",
+				"title": "ALTKit: Enquotes the selection in double quotes"
+			},
+			{
+				"command": "altkit.singleQuote",
+				"title": "ALTKit: Enquotes the selection in single quotes"
+			},
+			{
 				"command": "altkit.eval",
 				"title": "ALTKit: Evaluates the selected JavaScript code"
 			},
@@ -145,6 +153,10 @@
 			{
 				"command": "altkit.randomString30",
 				"title": "ALTKit: Replaces selection with a random 30-character string"
+			},
+			{
+				"command": "altkit.reverse",
+				"title": "ALTKit: Reverses selected lines, words, or characters"
 			},
 			{
 				"command": "altkit.toggleStatusBar",
