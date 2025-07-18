@@ -1,7 +1,6 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
-const {commandRegistry} = require('./utils');
 
 const registerCommands = context => {
 	const commandsPath = path.join(__dirname, 'commands');
@@ -38,7 +37,7 @@ const activate = context => {
 			.filter(cmd => cmd.command !== 'altkit.showAllCommands')
 			.map(cmd => ({
 				label: cmd.title.replace('ALTKit: ', ''),
-				detail: commandRegistry.get(cmd.command) || `Command: ${cmd.command}`,
+				detail: cmd.command,
 				commandId: cmd.command
 			}))
 		;
