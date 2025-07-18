@@ -10,26 +10,34 @@
 
 ### 🔤 Text Transformations
 - `To Camel Case` – Convert to `camelCase`
-- `Capitalize` – Capitalize each word
 - `To Upper Case` / `To Lower Case`
+- `Capitalize` – Capitalize each word
+- `joinLines` — Join multiple lines using comma separator
+- `cleanText` — Remove double spaces, trim, …
 - `Slugify`
 
 ### 🧠 Utilities
 - `Eval JavaScript` – Evaluate selected JavaScript
-- `Shuffle` – Shuffle letters, words, or lines
+- `Shuffle` – Shuffle characters, words, or lines
+- `Reverse` — Reverse order of characters, words, or lines
+- `Enquote` — Enquote strings in simpleQuotes or doubleQuotes taking care of escaping.
 - `Toggle Selection Stats in Status Bar` – View stats like word count, line count, and numeric figures (sum, avg, min, max)
 - `Increment Selection` – Increment numbers or letters in the selection. E.g. `1, 1, 1` becomes `1, 2, 3`, or `B, X, Z` becomes `B, C, D`.
+- `generateUUID`
 
 ### 🔁 Encoding & Decoding
 - `Base64 Encode` / `Base64 Decode`
 - `URL Encode` / `URL Decode`
 - `HTML De-entities` – Convert HTML entities to readable characters
+- `stripMarkdown` — Remove all Markdown tags
 - `Strip HTML` – Remove all HTML tags
 
-### 🔐 Hashing
+### 🔐 Hashing / Crypto
 - `MD5`, `SHA1`, `SHA256` – Compute secure hashes of selected text
+- `AESEncrypt` / `AESDecrypt` — Encrypt or decrypt a text using AES-256-CBC.
 
 ### 📅 Time Tools
+- `Insert current date/time` — Insert current ISO date/time
 - `Insert Current Timestamp` / `Insert Current Milli Timestamp`
 - `Convert Timestamp to Date` / `Convert Date to Timestamp`
 
