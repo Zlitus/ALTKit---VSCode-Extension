@@ -1,4 +1,4 @@
-const {JSDOM} = require('jsdom');
+const {parse} = require('node-html-parser');
 const {createCommandHandler, registerCommand} = require('../utils');
 
 const register = context => {
@@ -13,31 +13,29 @@ const register = context => {
 	}, 'Converts HTML entities to characters.'));
 
 	registerCommand(context, 'altkit.stripHtml', createCommandHandler((text) => {
-		const dom = new JSDOM(text);
-		const doc = dom.window.document;
+		const root = parse(text.replace(/<!DOCTYPE[^>]*>/i, ''));
 
 		const blockTags = [
 			'address', 'article', 'aside', 'blockquote', 'canvas', 'dd', 'div', 'dl', 'dt',
 			'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 			'header', 'hr', 'li', 'main', 'nav', 'noscript', 'ol', 'p', 'section', 'table', 'tfoot', 'ul', 'video'
 		];
-		const toRemoveSelector = ['script', 'style', 'head'];
-		toRemoveSelector.forEach((selector) => { doc.querySelectorAll(selector).forEach((el) => el.remove()); })
+		
+		root.querySelectorAll('script, style, head').forEach(el => el.remove());
 
 		const preformattedContent = [];
-		doc.querySelectorAll('pre').forEach((pre, index) => {
-			preformattedContent.push(pre.textContent);
+		root.querySelectorAll('pre').forEach((pre, index) => {
+			preformattedContent.push(pre.rawText);
 			pre.replaceWith(`__PRE_PLACEHOLDER_${index}__`);
 		});
 
-		doc.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
-		doc.querySelectorAll(blockTags.join(',')).forEach(el => el.after('\n'));
+		root.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+		root.querySelectorAll(blockTags.join(',')).forEach(el => el.insertAdjacentHTML('afterend', '\n'));
 
-		let content = doc.body.textContent || '';
+		let content = root.textContent || '';
 
 		const cleanedLines = [];
 		let consecutiveEmptyLines = 0;
-		
 		const lines = content.split('\n');
 
 		for (const line of lines) {
@@ -73,17 +71,17 @@ const register = context => {
 	}, 'Removes HTML tags from selection, preserving line breaks and preformatted blocks.'));
 
 	registerCommand(context, 'altkit.html2markdown', createCommandHandler(text => {
-		const dom = new JSDOM(text);
-		const doc = dom.window.document;
-		doc.querySelectorAll('script, style, head').forEach(el => el.remove());
+		const textWithoutDoctype = text.replace(/<!DOCTYPE[^>]*>/i, '').trim();
+		const root = parse(textWithoutDoctype);
+		root.querySelectorAll('script, style, head').forEach(el => el.remove());
 
 		const blockTagsList = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'hr', 'pre', 'blockquote', 'ul', 'ol', 'li'];
 		const isBlock = (node) => {
 			if (node.nodeType !== 1) return false;
-			return blockTagsList.includes(node.tagName.toLowerCase());
+			return blockTagsList.includes(node.tagName?.toLowerCase());
 		};
 
-		const nodeToMarkdown = (node, listMeta = {}) => {
+		const nodeToMarkdown = (node) => {
 			if (node.nodeType === 3) {
 				return node.textContent;
 			}
@@ -91,14 +89,14 @@ const register = context => {
 				return '';
 			}
 
-			const tagName = node.tagName.toLowerCase();
+			const tagName = node.tagName?.toLowerCase();
 
 			let childrenMarkdown = '';
 			const childNodes = Array.from(node.childNodes);
 			for (let i = 0; i < childNodes.length; i++) {
 				const child = childNodes[i];
 				const prevChild = i > 0 ? childNodes[i - 1] : null;
-				const childMd = nodeToMarkdown(child, listMeta);
+				const childMd = nodeToMarkdown(child);
 
 				if (prevChild && !isBlock(prevChild) && !isBlock(child)) {
 					if (childrenMarkdown.length > 0 && childMd.length > 0 && !/\s$/.test(childrenMarkdown) && !/^\s/.test(childMd)) {
@@ -116,7 +114,7 @@ const register = context => {
 				case 'h5': return `\n\n##### ${childrenMarkdown.trim()}\n\n`;
 				case 'h6': return `\n\n###### ${childrenMarkdown.trim()}\n\n`;
 				case 'p': return `\n\n${childrenMarkdown.trim()}\n\n`;
-				case 'br': return '  \n';
+				case 'br': return '\n';
 				case 'hr': return '\n\n---\n\n';
 				case 'strong': case 'b': return `**${childrenMarkdown.trim()}**`;
 				case 'em': case 'i': return `*${childrenMarkdown.trim()}*`;
@@ -125,18 +123,22 @@ const register = context => {
 					const linkText = childrenMarkdown.trim();
 					if (!linkText) return '';
 					const href = node.getAttribute('href') || '';
-					return `[${linkText}](<${href}>)`;
+					const needsAngleBrackets = /[()\[\]\s]/.test(href);
+					const finalHref = needsAngleBrackets ? `<${href}>` : href;
+					return `[${linkText}](${finalHref})`;
 				}
 				case 'img': {
 					const src = node.getAttribute('src') || '';
-					return `![${node.getAttribute('alt') || ''}](<${src}>)`;
+					const needsAngleBrackets = /[()\[\]\s]/.test(src);
+					const finalSrc = needsAngleBrackets ? `<${src}>` : src;
+					return `![${node.getAttribute('alt') || ''}](${finalSrc})`;
 				}
 				case 'code':
-					return node.closest('pre') ? childrenMarkdown : `\`${childrenMarkdown}\``;
+					return node.parentNode.tagName?.toLowerCase() === 'pre' ? childrenMarkdown : `\`${childrenMarkdown}\``;
 				case 'pre': {
 					const codeNode = node.querySelector('code');
-					const lang = (codeNode?.className.match(/language-(\w+)/) || [])[1] || '';
-					return `\n\n\`\`\`${lang}\n${node.textContent}\n\`\`\`\n\n`;
+					const lang = (codeNode?.getAttribute('class')?.match(/language-(\w+)/) || [])[1] || '';
+					return `\n\n\`\`\`${lang}\n${node.rawText}\n\`\`\`\n\n`;
 				}
 				case 'blockquote':
 					return `\n\n> ${childrenMarkdown.trim().replace(/\n/g, '\n> ')}\n\n`;
@@ -144,13 +146,13 @@ const register = context => {
 				case 'ol': {
 					let listContent = '';
 					const isOrdered = tagName === 'ol';
-					const parentIsLi = node.parentNode?.tagName.toLowerCase() === 'li';
-					Array.from(node.children).forEach((li, index) => {
-						if (li.tagName.toLowerCase() !== 'li') return;
+					const parentIsLi = node.parentNode?.tagName?.toLowerCase() === 'li';
+					Array.from(node.childNodes).forEach((li, index) => {
+						if (li.nodeType !== 1 || li.tagName?.toLowerCase() !== 'li') return;
 						const itemPrefix = isOrdered ? `${index + 1}. ` : '* ';
-						const itemContent = Array.from(li.childNodes).map(child => nodeToMarkdown(child, {inList: true})).join('').trim();
-						const indentation = parentIsLi ? '  ' : '';
-						listContent += `${indentation}${itemPrefix}${itemContent.replace(/\n/g, `\n${indentation}  `)}\n`;
+						const itemContent = Array.from(li.childNodes).map(child => nodeToMarkdown(child)).join('').trim();
+						const indentation = parentIsLi ? '\t' : '';
+						listContent += `${indentation}${itemPrefix}${itemContent.replace(/\n/g, `\n${indentation}\t`)}\n`;
 					});
 					const finalContent = listContent.trimEnd();
 					if (!finalContent) return '';
@@ -163,12 +165,12 @@ const register = context => {
 			}
 		};
 
-		const markdown = nodeToMarkdown(doc.body);
+		const markdown = nodeToMarkdown(root);
 		return markdown.replace(/\n{3,}/g, '\n\n').trim();
 	}, 'Converts HTML to Markdown.'));
 
 	registerCommand(context, 'altkit.markdown2html', createCommandHandler(text => {
-		const processInline = (markdown) => {
+		const processInline = markdown => {
 			return markdown
 				.replace(/!\[([^\]]*)\]\((<[^>]*>|[^)]*)\)/g, (match, alt, url) => {
 					const finalUrl = url.startsWith('<') && url.endsWith('>') ? url.slice(1, -1) : url;
@@ -181,7 +183,8 @@ const register = context => {
 				.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 				.replace(/\*(.*?)\*/g, '<em>$1</em>')
 				.replace(/~~(.*?)~~/g, '<del>$1</del>')
-				.replace(/`([^`]+)`/g, '<code>$1</code>');
+				.replace(/`([^`]+)`/g, '<code>$1</code>')
+			;
 		};
 
 		const blocks = text.split(/\n\s*\n/);

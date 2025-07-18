@@ -1,3 +1,8 @@
+# 0.0.9
+## 2025/07/18
+
+- Remove dependancy to JSDom, was way too big. Using `node-html-parser` instead.
+
 # 0.0.8
 ## 2025/07/18
 

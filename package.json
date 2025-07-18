@@ -207,6 +207,6 @@
 		"eslint": "^9.25.1"
 	},
 	"dependencies": {
-		"jsdom": "^26.1.0"
+		"node-html-parser": "^7.0.1"
 	}
 }
