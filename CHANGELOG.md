@@ -1,3 +1,8 @@
+# 0.0.10
+## 2025/07/19
+
+- Add Filter Lines, PadLeft & PadRight
+
 # 0.0.9
 ## 2025/07/18
 
