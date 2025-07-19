@@ -155,6 +155,14 @@
 				"title": "ALTKit: Minifies the selected JSON"
 			},
 			{
+				"command": "altkit.padLeft",
+				"title": "ALTKit: Pad lines to the left"
+			},
+			{
+				"command": "altkit.padRight",
+				"title": "ALTKit: Pad lines to the right"
+			},
+			{
 				"command": "altkit.deduplicateLines",
 				"title": "ALTKit: Removes duplicate lines from the selection or document"
 			},
