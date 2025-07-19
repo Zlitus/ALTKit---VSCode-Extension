@@ -111,6 +111,22 @@
 				"title": "ALTKit: Evaluates the selected JavaScript code"
 			},
 			{
+				"command": "altkit.filterLinesRegex",
+				"title": "ALTKit: Filter Lines (Keep matches, Regex)"
+			},
+			{
+				"command": "altkit.filterLines",
+				"title": "ALTKit: Filter Lines (Keep matches)"
+			},
+			{
+				"command": "altkit.filterOutLinesRegex",
+				"title": "ALTKit: Filter Out Lines (Remove matches, Regex)"
+			},
+			{
+				"command": "altkit.filterOutLines",
+				"title": "ALTKit: Filter Out Lines (Remove matches)"
+			},
+			{
 				"command": "altkit.jsonPrettify",
 				"title": "ALTKit: Formats the selected JSON nicely"
 			},
