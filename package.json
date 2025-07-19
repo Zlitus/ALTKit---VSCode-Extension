@@ -71,6 +71,22 @@
 				"title": "ALTKit: Converts selection to camelCase"
 			},
 			{
+				"command": "altkit.colorHexToRgb",
+				"title": "ALTKit: Converts the selected HEX color to RGB(A) format"
+			},
+			{
+				"command": "altkit.colorHslToRgb",
+				"title": "ALTKit: Converts the selected HSL(A) color to RGB(A) format"
+			},
+			{
+				"command": "altkit.colorRgbToHex",
+				"title": "ALTKit: Converts the selected RGB(A) color to HEX format"
+			},
+			{
+				"command": "altkit.colorRgbToHsl",
+				"title": "ALTKit: Converts the selected RGB(A) color to HSL(A) format"
+			},
+			{
 				"command": "altkit.toLowerCase",
 				"title": "ALTKit: Converts the selection to lowercase"
 			},
@@ -205,6 +221,10 @@
 			{
 				"command": "altkit.sortLinesDesc",
 				"title": "ALTKit: Sorts the selected lines in reverse alphabetical order"
+			},
+			{
+				"command": "altkit.colorToggleFormat",
+				"title": "ALTKit: Toggles color format (HEX -> RGB -> HSL -> HEX)"
 			}
 		],
 		"keybindings": [
