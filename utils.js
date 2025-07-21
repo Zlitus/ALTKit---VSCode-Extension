@@ -12,8 +12,14 @@ const createCommandHandler = (transformation, description) => {
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
 			const {document, selections} = editor;
+
+			let effectiveSelections = selections;
+			if (!selections || selections.filter(selection => !selection.isEmpty).length === 0) {
+				effectiveSelections = [new vscode.Selection(0, 0, document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length)];
+			}
+
 			editor.edit(editBuilder => {
-				selections.forEach(selection => {
+				effectiveSelections.forEach(selection => {
 					if (selection.isEmpty) return;
 					const selectedText = document.getText(selection);
 					try {
