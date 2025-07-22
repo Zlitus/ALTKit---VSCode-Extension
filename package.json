@@ -6,14 +6,43 @@
 		"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"
 	},
 	"license": "MIT",
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"publisher": "ArnaudLefort",
 	"engines": {
 		"vscode": "^1.102.0"
 	},
-	"categories": [
-		"Other"
+	"keywords": [
+		"text",
+		"manipulation",
+		"transformation",
+		"formatter",
+		"hash",
+		"base64",
+		"slugify",
+		"camelCase",
+		"json",
+		"html",
+		"markdown",
+		"encrypt",
+		"decrypt",
+		"color",
+		"random",
+		"uuid",
+		"timestamp",
+		"vscode-extension",
+		"toolkit",
+		"text-tools",
+		"utilities"
 	],
+	"categories": [
+		"Formatters",
+		"Other",
+		"Linters"
+	],
+	"bugs": {
+		"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension/issues"
+	},
+	"homepage": "https://github.com/Zlitus/ALTKit---VSCode-Extension",
 	"activationEvents": [],
 	"main": "./extension.js",
 	"contributes": {
@@ -241,18 +270,7 @@
 		]
 	},
 	"scripts": {
-		"lint": "eslint .",
-		"pretest": "npm run lint",
-		"test": "vscode-test",
 		"update-commands": "node scripts/generate-commands.js"
-	},
-	"devDependencies": {
-		"@types/mocha": "^10.0.10",
-		"@types/node": "20.x",
-		"@types/vscode": "^1.102.0",
-		"@vscode/test-cli": "^0.0.11",
-		"@vscode/test-electron": "^2.5.2",
-		"eslint": "^9.25.1"
 	},
 	"dependencies": {
 		"node-html-parser": "^7.0.1"

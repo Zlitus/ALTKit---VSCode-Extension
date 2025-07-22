@@ -1,3 +1,13 @@
+# 0.0.12
+## 2025/07/22
+
+- More detailled package.json categories, keywords, description, homepage, bugs reporting, …
+
+# 0.0.11
+## 2025/07/22
+
+- Add Color Conversion commands
+
 # 0.0.10
 ## 2025/07/19
 
