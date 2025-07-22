@@ -6,7 +6,7 @@
 		"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"
 	},
 	"license": "MIT",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"publisher": "ArnaudLefort",
 	"engines": {
 		"vscode": "^1.102.0"
@@ -144,7 +144,7 @@
 			},
 			{
 				"command": "altkit.jsonPrettify",
-				"title": "ALTKit: Formats the selected JSON nicely"
+				"title": "ALTKit: Formats the selected JSON nicely (JSON Prettify JSON)"
 			},
 			{
 				"command": "altkit.incrementSelection",
@@ -177,6 +177,10 @@
 			{
 				"command": "altkit.padRight",
 				"title": "ALTKit: Pad lines to the right"
+			},
+			{
+				"command": "altkit.jsonPath",
+				"title": "ALTKit: Query selected JSON using a JSONPath expression"
 			},
 			{
 				"command": "altkit.deduplicateLines",

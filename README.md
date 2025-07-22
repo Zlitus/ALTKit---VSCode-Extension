@@ -25,6 +25,7 @@
 - `Toggle Selection Stats in Status Bar` – View stats like word count, line count, and numeric figures (sum, avg, min, max)
 - `Increment Selection` – Increment numbers or letters in the selection. E.g. `1, 1, 1` becomes `1, 2, 3`, or `B, X, Z` becomes `B, C, D`
 - `Generate UUID` – Instantly create a universally unique identifier
+- `Color Conversion` — Conversion between RGB(A) <-> HEX <-> HSL, and a `Toggle color format` to "switch" between formats
 
 ### 🔁 Encoding & Decoding
 - `Base64 Encode` / `Base64 Decode`
