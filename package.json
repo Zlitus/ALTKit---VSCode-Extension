@@ -173,7 +173,7 @@
 			},
 			{
 				"command": "altkit.jsonPrettify",
-				"title": "ALTKit: Formats the selected JSON nicely (JSON Prettify JSON)"
+				"title": "ALTKit: Formats the selected JSON nicely"
 			},
 			{
 				"command": "altkit.incrementSelection",
@@ -194,6 +194,10 @@
 			{
 				"command": "altkit.joinLines",
 				"title": "ALTKit: Joins selected lines with a comma and space"
+			},
+			{
+				"command": "altkit.jsonStringify",
+				"title": "ALTKit: JSON Stringify the selected texts"
 			},
 			{
 				"command": "altkit.jsonMinify",
