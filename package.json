@@ -262,6 +262,14 @@
 			{
 				"command": "altkit.colorToggleFormat",
 				"title": "ALTKit: Toggles color format (HEX -> RGB -> HSL -> HEX)"
+			},
+			{
+				"command": "altkit.urlDecode",
+				"title": "ALTKit: URL Decode"
+			},
+			{
+				"command": "altkit.urlEncode",
+				"title": "ALTKit: URL Encode"
 			}
 		],
 		"keybindings": [

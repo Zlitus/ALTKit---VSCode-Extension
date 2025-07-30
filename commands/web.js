@@ -1,13 +1,9 @@
 const vscode = require('vscode');
-const {createCommandHandler} = require('../utils');
+const {createCommandHandler, registerCommand} = require('../utils');
 
 const register = context => {
-	const disposables = [
-		vscode.commands.registerCommand('altkit.urlEncode', createCommandHandler(text => encodeURIComponent(text))),
-		vscode.commands.registerCommand('altkit.urlDecode', createCommandHandler(text => decodeURIComponent(text))),
-	];
-
-	context.subscriptions.push(...disposables);
+	registerCommand(context, 'altkit.urlEncode', createCommandHandler(text => {try { return encodeURIComponent(text); } catch (e) { throw new Error('Invalid text selected.'); }}, 'URL Encode.'));
+	registerCommand(context, 'altkit.urlDecode', createCommandHandler(text => {try { return decodeURIComponent(text); } catch (e) { throw new Error('Invalid text selected.'); }}, 'URL Decode.'));
 };
 
 module.exports = {register};
