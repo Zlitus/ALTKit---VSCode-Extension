@@ -81,3 +81,7 @@ Toggle selection statistics in the status bar to get quick insights into:
 ## ✨ Inspiration
 
 This extension was inspired by the excellent [Swissknife](https://marketplace.visualstudio.com/items?itemName=luisfontes19.vscode-swissknife) by Luis Fontes. I had the pleasure of contributing to Swissknife by writing a few scripts for it.
+
+## Support
+
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=zlitus&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/zlitus)
