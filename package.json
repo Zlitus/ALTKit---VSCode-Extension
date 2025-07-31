@@ -128,6 +128,14 @@
 				"title": "ALTKit: Counts line occurrences and displays a summary table"
 			},
 			{
+				"command": "altkit.cssMinify",
+				"title": "ALTKit: CSS Minified"
+			},
+			{
+				"command": "altkit.cssPrettify",
+				"title": "ALTKit: CSS Prettified"
+			},
+			{
 				"command": "altkit.base64Decode",
 				"title": "ALTKit: Decodes the Base64 selection"
 			},
@@ -174,6 +182,14 @@
 			{
 				"command": "altkit.jsonPrettify",
 				"title": "ALTKit: Formats the selected JSON nicely"
+			},
+			{
+				"command": "altkit.htmlMinify",
+				"title": "ALTKit: HTML Minified"
+			},
+			{
+				"command": "altkit.htmlPrettify",
+				"title": "ALTKit: HTML Prettified"
 			},
 			{
 				"command": "altkit.incrementSelection",
