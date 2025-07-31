@@ -1,3 +1,15 @@
+# 0.0.14
+## 2025/07/31
+
+- Implement new commands HTML Prettify / CSS Prettify
+- Small fixes
+
+# 0.0.13
+## 2025/07/30
+
+- Fixing issues in URL Encode / URL Decode
+- Implement new command JSON Stringify
+
 # 0.0.12
 ## 2025/07/22
 

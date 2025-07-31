@@ -6,7 +6,7 @@
 		"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"
 	},
 	"license": "MIT",
-	"version": "0.0.13",
+	"version": "0.0.14",
 	"publisher": "ArnaudLefort",
 	"engines": {
 		"vscode": "^1.102.0"

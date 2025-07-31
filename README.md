@@ -9,49 +9,52 @@
 ## 🚀 Features
 
 ### 🔤 Text Transformations
-- `To Camel Case` – Convert to `camelCase`
+- `To Camel Case` – Convert to `camelCase`.
 - `To Upper Case` / `To Lower Case`
-- `Capitalize` – Capitalize each word
-- `Join lines` — Join multiple lines using comma separator
-- `Clean text` — Remove double spaces, trim, …
-- `Slugify` — Converts text into a URL-friendly slug: lowercase, hyphens for spaces, and removes special characters
-- `Pad left / right` — Add spaces or characters to the left or right to reach a desired length. Ex: 1 can become 001
+- `Capitalize` – Capitalize each word.
+- `Join lines` — Join multiple lines using comma separator.
+- `Clean text` — Remove double spaces, trim, ….
+- `Slugify` — Converts text into a URL-friendly slug: lowercase, hyphens for spaces, and removes special characters.
+- `Pad left / right` — Add spaces or characters to the left or right to reach a desired length. Ex: 1 can become 001.
 
 ### 🧠 Utilities
-- `Eval JavaScript` – Evaluate selected JavaScript
-- `Shuffle` – Shuffle characters, words, or lines
-- `Reverse` — Reverse order of characters, words, or lines
-- `Enquote` — Enquote strings in simpleQuotes or doubleQuotes taking care of escaping. Ideal for use with `Join Lines`
-- `Toggle Selection Stats in Status Bar` – View stats like word count, line count, and numeric figures (sum, avg, min, max)
-- `Increment Selection` – Increment numbers or letters in the selection. E.g. `1, 1, 1` becomes `1, 2, 3`, or `B, X, Z` becomes `B, C, D`
-- `Generate UUID` – Instantly create a universally unique identifier
-- `Color Conversion` — Conversion between RGB(A) <-> HEX <-> HSL, and a `Toggle color format` to "switch" between formats
+- `Eval JavaScript` – Evaluate selected JavaScript.
+- `Shuffle` – Shuffle characters, words, or lines.
+- `Reverse` — Reverse order of characters, words, or lines.
+- `Enquote` — Enquote strings in simpleQuotes or doubleQuotes taking care of escaping. Ideal for use with `Join Lines`.
+- `Toggle Selection Stats in Status Bar` – View stats like word count, line count, and numeric figures (sum, avg, min, max).
+- `Increment Selection` – Increment numbers or letters in the selection. E.g. `1, 1, 1` becomes `1, 2, 3`, or `B, X, Z` becomes `B, C, D`.
+- `Generate UUID` – Instantly create a universally unique identifier.
+- `Color Conversion` — Conversion between RGB(A) <-> HEX <-> HSL, and a `Toggle color format` to "switch" between formats.
+- `CSS Prettify` - Beautify CSS code to ensure proper indentation and line breaks.
+- `Strip Markdown` — Remove all Markdown tags.
+- `Strip HTML` – Remove all HTML tags and keep only the text. DOM-Level operation, ignore script & style.
+- `HTML Prettify` - Formats HTML code by adding proper indentation, line breaks, and organizing elements.
+- `HTML De-entities` – Convert HTML entities to readable characters.
+- `HTML to Markdown` / `Markdown to HTML` Convert HTML to Markdown & Markdown to HTML.
 
 ### 🔁 Encoding & Decoding
 - `Base64 Encode` / `Base64 Decode`
 - `URL Encode` / `URL Decode`
-- `HTML to Markdown` / `Markdown to HTML` Convert HTML to Markdown & Markdown to HTML
-- `HTML De-entities` – Convert HTML entities to readable characters
-- `Strip HTML` – Remove all HTML tags and keep only the text. DOM-Level operation, ignore script & style
-- `Strip Markdown` — Remove all Markdown tags
 
 ### 🔐 Hashing / Crypto
-- `MD5`, `SHA1`, `SHA256` – Compute secure hashes of selected text
+- `MD5`, `SHA1`, `SHA256` – Compute secure hashes of selected text.
 - `AESEncrypt` / `AESDecrypt` — Encrypt or decrypt a text using AES-256-CBC.
 
 ### 📅 Time Tools
-- `Insert current date/time` — Insert current ISO date/time
+- `Insert current date/time` — Insert current ISO date/time.
 - `Insert Current Timestamp` / `Insert Current Milli Timestamp`
 - `Convert Timestamp to Date` / `Convert Date to Timestamp`
 
 ### 📄 JSON Helpers
-- `JSON Minify` – Minify selected JSON
-- `JSON Prettify` – Format JSON nicely
+- `JSON Prettify` – Format JSON nicely.
+- `JSON Minify` – Minify selected JSON.
+- `JSON Stringify` — Stringify the selection to a JSON.
 
 ### 🔠 Line Operations
 - `Sort Lines (Ascending / Descending)`
-- `De-duplicate uniq Lines` – Remove duplicates
-- `De-duplicate uniq Lines (Table view)` – Display frequency stats per line
+- `De-duplicate uniq Lines` – Remove duplicates.
+- `De-duplicate uniq Lines (Table view)` – Display frequency stats per line.
 - `Filter` / `Filter out` — Filter lines using simple text match or regex.
 
 ### ✨ Generate Random Text
