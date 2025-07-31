@@ -191,8 +191,6 @@ const prettifyCSS = (text) => {
 	return output.trim() + '\n';
 };
 
-global.prettifyCSS = prettifyCSS;
-
 const minifyCSS = text => {
 	return text
 		.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '$1')
