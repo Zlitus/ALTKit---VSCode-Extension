@@ -1,3 +1,10 @@
+# 0.0.16
+## 2026/02/19
+
+- Add new command: Random Port (1024-65535)
+- Fix Shuffle command: now properly shuffles words within a line and letters within a single word (not just lines)
+- Bundle extension with esbuild for faster load times and smaller package size
+
 # 0.0.14
 ## 2025/07/31
 

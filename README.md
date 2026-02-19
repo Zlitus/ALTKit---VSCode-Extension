@@ -60,6 +60,7 @@
 ### ✨ Generate Random Text
 - `Random String (15 chars)`
 - `Random String (30 chars)`
+- `Random Port` — Generate a random port number (1024-65535).
 
 ---
 

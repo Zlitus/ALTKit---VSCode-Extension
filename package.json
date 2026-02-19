@@ -6,7 +6,7 @@
 		"url": "https://github.com/Zlitus/ALTKit---VSCode-Extension"
 	},
 	"license": "MIT",
-	"version": "0.0.15",
+	"version": "0.0.16",
 	"publisher": "ArnaudLefort",
 	"engines": {
 		"vscode": "^1.102.0"
@@ -248,15 +248,19 @@
 			},
 			{
 				"command": "altkit.generateUUID",
-				"title": "ALTKit: Replaces selection with a new UUID"
+				"title": "ALTKit: Insert/Replaces selection with a new UUID"
 			},
 			{
 				"command": "altkit.randomString15",
-				"title": "ALTKit: Replaces selection with a random 15-character string"
+				"title": "ALTKit: Insert/Replaces selection with a random 15-character string"
 			},
 			{
 				"command": "altkit.randomString30",
-				"title": "ALTKit: Replaces selection with a random 30-character string"
+				"title": "ALTKit: Insert/Replaces selection with a random 30-character string"
+			},
+			{
+				"command": "altkit.randomPort",
+				"title": "ALTKit: Insert/Replaces selection with a random port number (1024-65535)"
 			},
 			{
 				"command": "altkit.reverse",
