@@ -1,4 +1,4 @@
-const {parse} = require('node-html-parser');
+const {parse} = require('./vendor');
 const {createCommandHandler, registerCommand} = require('../utils');
 
 const register = context => {

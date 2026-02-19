@@ -47,7 +47,7 @@
 	},
 	"homepage": "https://github.com/Zlitus/ALTKit---VSCode-Extension",
 	"activationEvents": [],
-	"main": "./extension.js",
+	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
@@ -301,9 +301,14 @@
 		]
 	},
 	"scripts": {
-		"update-commands": "node scripts/generate-commands.js"
+		"update-commands": "node scripts/generate-commands.js",
+		"build": "esbuild extension.js --bundle --outfile=dist/extension.js --platform=node --external:vscode --external:./vendor --format=cjs --minify && esbuild commands/vendor.js --bundle --outfile=dist/vendor.js --platform=node --format=cjs --minify",
+		"vscode:prepublish": "npm run build"
 	},
 	"dependencies": {
 		"node-html-parser": "^7.0.1"
+	},
+	"devDependencies": {
+		"esbuild": "^0.27.3"
 	}
 }

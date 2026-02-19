@@ -1,28 +1,27 @@
 const vscode = require('vscode');
-const fs = require('fs');
-const path = require('path');
+
+const commandModules = [
+	require('./commands/case'),
+	require('./commands/colors'),
+	require('./commands/crypto'),
+	require('./commands/eval'),
+	require('./commands/filters'),
+	require('./commands/generateText'),
+	require('./commands/html'),
+	require('./commands/increment'),
+	require('./commands/json'),
+	require('./commands/lines'),
+	require('./commands/slugify'),
+	require('./commands/statusbar'),
+	require('./commands/text'),
+	require('./commands/time'),
+	require('./commands/web'),
+];
 
 const registerCommands = context => {
-	const commandsPath = path.join(__dirname, 'commands');
-
-	if (!fs.existsSync(commandsPath)) {
-		console.warn(`The 'commands' directory does not exist. No commands will be loaded.`);
-		return;
-	}
-
-	fs.readdirSync(commandsPath).forEach(file => {
-		if (file.endsWith('.js')) {
-			try {
-				const commandModule = require(path.join(commandsPath, file));
-				if (commandModule.register) {
-					commandModule.register(context);
-				} else {
-					 console.warn(`Command file ${file} does not have a 'register' export.`);
-				}
-			} catch (error) {
-				console.error(`Failed to load or register command from ${file}:`, error);
-				vscode.window.showErrorMessage(`Failed to load command from ${file}. See debug console for details.`);
-			}
+	commandModules.forEach(mod => {
+		if (mod.register) {
+			mod.register(context);
 		}
 	});
 };
