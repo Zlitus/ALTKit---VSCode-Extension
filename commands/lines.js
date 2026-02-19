@@ -4,7 +4,16 @@ const {createLineCommandHandler, createCommandHandler, shuffleArray, registerCom
 const register = context => {
 	registerCommand(context, 'altkit.sortLinesAsc', createLineCommandHandler(lines => lines.sort(), 'Sorts the selected lines alphabetically.'));
 	registerCommand(context, 'altkit.sortLinesDesc', createLineCommandHandler(lines => lines.sort().reverse(), 'Sorts the selected lines in reverse alphabetical order.'));
-	registerCommand(context, 'altkit.shuffle', createLineCommandHandler(lines => shuffleArray(lines), 'Shuffles selected lines, words, or letters.'));
+	const shuffleHandler = createCommandHandler(text => {
+		if (text.includes('\n')) {
+			return shuffleArray(text.split(/\r?\n/)).join('\n')
+		} else if (text.trim().includes(' ')) {
+			return shuffleArray(text.split(' ')).join(' ')
+		} else {
+			return shuffleArray(text.split('')).join('')
+		}
+	})
+	registerCommand(context, 'altkit.shuffle', shuffleHandler, 'Shuffles selected lines, words, or letters.');
 	registerCommand(context, 'altkit.joinLines', createCommandHandler(text => text.replace(/\n/g, ', '), 'Joins selected lines with a comma and space.'));
 
 	const deduplicateLinesHandler = () => {
