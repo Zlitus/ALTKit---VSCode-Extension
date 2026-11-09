@@ -1,5 +1,7 @@
-const {parse} = require('./vendor');
 const {createCommandHandler, registerCommand} = require('../utils');
+
+let parser;
+const parse = (...args) => (parser || (parser = require('./vendor'))).parse(...args);
 
 const register = context => {
 	registerCommand(context, 'altkit.htmlDeentities', createCommandHandler(text => {

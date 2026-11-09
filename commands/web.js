@@ -15,6 +15,15 @@ const prettifyCSS = (text) => {
 
 	let output = '';
 	let i = 0;
+	const chunks = [];
+	const flushOutput = () => {
+		let k = output.length - 1;
+		while (k > 0 && /\s/.test(output[k])) k--;
+		if (k > 0) {
+			chunks.push(output.slice(0, k));
+			output = output.slice(k);
+		}
+	};
 
 	const applyIndent = () => '\t'.repeat(status.indent);
 
@@ -30,6 +39,7 @@ const prettifyCSS = (text) => {
 	};
 
 	while (i < text.length) {
+		if (output.length > 4096) flushOutput();
 		const char = text[i];
 		const nextChar = text[i + 1];
 		const prevChar = i > 0 ? text[i - 1] : '';
@@ -146,7 +156,7 @@ const prettifyCSS = (text) => {
 		}
 
 		if (status.inPropertyValue) {
-			if (text.substring(i).toLowerCase().startsWith('calc(')) {
+			if (text.substr(i, 5).toLowerCase() === 'calc(') {
 				status.inCalc = true;
 			}
 
@@ -188,12 +198,12 @@ const prettifyCSS = (text) => {
 		i++;
 	}
 
-	return output.trim() + '\n';
+	return (chunks.join('') + output).trim() + '\n';
 };
 
 const minifyCSS = text => {
 	return text
-		.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '$1')
+		.replace(/\/\*[\s\S]*?\*\//g, '')
 		.replace(/\s+/g, ' ')
 		.replace(/\s*([;:{},])\s*/g, '$1')
 		.replace(/;}/g, '}')
@@ -223,50 +233,42 @@ const prettifyHTML = text => {
 	const tokens = [];
 	let i = 0;
 	const source = text.trim();
+	// Sticky regex: matches at position i without copying the remaining string (avoids O(n²)).
+	const specialRegex = /<(pre|textarea|script|style)\b[\s\S]*?<\/\1\s*>|<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<!\[[^\]]*\]>/iy;
 
 	while (i < source.length) {
-		const remaining = source.substring(i);
-		const specialMatch = remaining.match(/^(<(pre|textarea|script|style)[\s\S]*?<\/\2>|<!--[\s\S]*?-->|<!\[[\s\S]*?\]>)/i);
-		
+		specialRegex.lastIndex = i;
+		const specialMatch = specialRegex.exec(source);
+
 		if (specialMatch) {
 			tokens.push(specialMatch[0]);
 			i += specialMatch[0].length;
 			continue;
 		}
 
-		if (remaining[0] === '<') {
+		if (source[i] === '<') {
 			let tagEnd = -1;
 			let inQuote = null;
-			for (let j = 1; j < remaining.length; j++) {
-				const char = remaining[j];
+			for (let j = i + 1; j < source.length; j++) {
+				const char = source[j];
 				if (inQuote) {
 					if (char === inQuote) inQuote = null;
-				} else {
-					if (char === '"' || char === "'") {
-						inQuote = char;
-					} else if (char === '>') {
-						tagEnd = j;
-						break;
-					}
+				} else if (char === '"' || char === "'") {
+					inQuote = char;
+				} else if (char === '>') {
+					tagEnd = j;
+					break;
 				}
 			}
-			
-			if (tagEnd !== -1) {
-				tokens.push(remaining.substring(0, tagEnd + 1));
-				i += tagEnd + 1;
-			} else {
-				tokens.push(remaining);
-				i = source.length;
-			}
+
+			const end = tagEnd === -1 ? source.length : tagEnd + 1;
+			tokens.push(source.substring(i, end));
+			i = end;
 		} else {
-			const nextTag = remaining.indexOf('<');
-			if (nextTag === -1) {
-				tokens.push(remaining);
-				i = source.length;
-			} else {
-				tokens.push(remaining.substring(0, nextTag));
-				i += nextTag;
-			}
+			const nextTag = source.indexOf('<', i);
+			const end = nextTag === -1 ? source.length : nextTag;
+			tokens.push(source.substring(i, end));
+			i = end;
 		}
 	}
 
@@ -282,7 +284,7 @@ const prettifyHTML = text => {
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
 		const isStyleBlock = /^<style\b/i.test(token.trim());
-		const isSpecialBlock = /^<(pre|textarea|script)\b/i.test(token.trim()) || /^<!--/.test(token.trim());
+		const isSpecialBlock = /^<(pre|textarea|script)\b/i.test(token.trim()) || /^<!(--|\[CDATA\[)/i.test(token.trim());
 		let trimmedToken = isStyleBlock || isSpecialBlock ? token : token.trim();
 
 		if (!trimmedToken) continue;
@@ -304,8 +306,12 @@ const prettifyHTML = text => {
 			const styleMatch = trimmedToken.match(/^<style(.*?)>([\s\S]*)<\/style>$/i);
 			if (styleMatch) {
 				const attributes = styleMatch[1] || '';
-				const content = styleMatch[2] || '';
-				const prettifiedContent = prettifyCSS(content);
+				let content = styleMatch[2] || '';
+				// <style><![CDATA[ ... ]]></style> (SVG/XHTML): format the CSS, keep the CDATA wrapper.
+				const cdataMatch = content.match(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/);
+				if (cdataMatch) content = cdataMatch[1];
+				let prettifiedContent = prettifyCSS(content).trimEnd();
+				if (cdataMatch) prettifiedContent = `<![CDATA[\n${prettifiedContent.split('\n').map(line => tab + line).join('\n')}\n]]>`;
 				result += tab.repeat(indentLevel) + `<style${attributes}>` + '\n';
 				result += prettifiedContent.split('\n').map(line => tab.repeat(indentLevel + 1) + line).join('\n') + '\n';
 				result += tab.repeat(indentLevel) + `</style>` + '\n';
@@ -331,6 +337,12 @@ const prettifyHTML = text => {
 		
 		if (trimmedToken.toLowerCase().startsWith('<!doctype')) {
 			result += trimmedToken + '\n';
+			continue;
+		}
+
+		// <?xml ...?>, <!ENTITY ...> and other declarations: no closing tag, so never indent after them.
+		if (/^<[!?]/.test(trimmedToken)) {
+			result += tab.repeat(indentLevel) + trimmedToken + '\n';
 			continue;
 		}
 
@@ -391,6 +403,12 @@ const prettifyHTML = text => {
 		}
 		
 		if (isClosingTag) {
+			const matchIndex = openTags.lastIndexOf(tagName);
+			while (matchIndex !== -1 && openTags.length - 1 > matchIndex && autoClosingTags.has(openTags[openTags.length - 1])) {
+				const closedTag = openTags.pop();
+				indentLevel = Math.max(0, indentLevel - 1);
+				result += tab.repeat(indentLevel) + `</${closedTag}>` + '\n';
+			}
 			indentLevel = Math.max(0, indentLevel - 1);
 			if (openTags.length > 0 && openTags[openTags.length - 1] === tagName) {
 				openTags.pop();
@@ -408,11 +426,18 @@ const prettifyHTML = text => {
 };
 
 const minifyHTML = text => {
-	return text
-		.replace(/<!--[\s\S]*?-->/g, '')
+	const preserved = [];
+	const protectedText = text.replace(/<(pre|textarea|script|style)\b[\s\S]*?<\/\1\s*>|<!\[CDATA\[[\s\S]*?\]\]>/gi, match => {
+		preserved.push(match);
+		return `<\u0000${preserved.length - 1}\u0000>`;
+	});
+
+	return protectedText
+		.replace(/<!--(?!\[if)[\s\S]*?-->/g, '')
 		.replace(/\s+/g, ' ')
 		.replace(/>\s+</g, '><')
-		.trim();
+		.trim()
+		.replace(/<\u0000(\d+)\u0000>/g, (match, index) => preserved[index]);
 };
 
 const register = context => {
