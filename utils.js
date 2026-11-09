@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const vscode = require('vscode');
 
 // If in generator mode, prepare a global array to store commands.
@@ -98,7 +99,7 @@ const generateRandomString = length => {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	let result = '';
 	for (let i = 0; i < length; i++) {
-		result += chars.charAt(Math.floor(Math.random() * chars.length));
+		result += chars.charAt(crypto.randomInt(chars.length));
 	}
 	return result;
 };

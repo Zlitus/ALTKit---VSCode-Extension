@@ -1,7 +1,8 @@
 const {createCommandHandler, registerCommand} = require('../utils');
 
 let parser;
-const parse = (...args) => (parser || (parser = require('./vendor'))).parse(...args);
+const parseOptions = {blockTextElements: {script: true, style: true, noscript: true}};
+const parse = text => (parser || (parser = require('./vendor'))).parse(text, parseOptions);
 
 const register = context => {
 	registerCommand(context, 'altkit.htmlDeentities', createCommandHandler(text => {
@@ -27,8 +28,8 @@ const register = context => {
 
 		const preformattedContent = [];
 		root.querySelectorAll('pre').forEach((pre, index) => {
-			preformattedContent.push(pre.rawText);
-			pre.replaceWith(`__PRE_PLACEHOLDER_${index}__`);
+			preformattedContent.push(pre.textContent);
+			pre.replaceWith(`\n__PRE_PLACEHOLDER_${index}__\n`);
 		});
 
 		root.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
@@ -140,7 +141,7 @@ const register = context => {
 				case 'pre': {
 					const codeNode = node.querySelector('code');
 					const lang = (codeNode?.getAttribute('class')?.match(/language-(\w+)/) || [])[1] || '';
-					return `\n\n\`\`\`${lang}\n${node.rawText}\n\`\`\`\n\n`;
+					return `\n\n\`\`\`${lang}\n${node.textContent}\n\`\`\`\n\n`;
 				}
 				case 'blockquote':
 					return `\n\n> ${childrenMarkdown.trim().replace(/\n/g, '\n> ')}\n\n`;
