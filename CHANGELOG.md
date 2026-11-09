@@ -1,3 +1,17 @@
+# 0.0.17
+## 2026/11/09
+
+- Fix HTML Prettify with CDATA sections: no more broken indentation, split blocks or collapsed whitespace; `<style><![CDATA[...]]></style>` (SVG) is now formatted correctly
+- Fix HTML Prettify indentation after `<?xml ?>` declarations and unclosed `<li>`/`<p>` before their parent closes
+- Fix HTML Minify breaking inline scripts (`//` comments) and whitespace in `<pre>`, `<textarea>`, `<script>`, `<style>` and CDATA
+- Fix CSS Minify removing protocol-relative URLs (`url(//cdn...)`)
+- Fix Strip HTML / HTML to Markdown leaking `<code>` tags and undecoded entities from `<pre>` blocks; code block language is now detected
+- Fix Strip HTML gluing `<pre>` content to the preceding text
+- AES Encrypt now derives a full 256-bit key with scrypt and a random salt (new `v2:` format); texts encrypted with previous versions can still be decrypted. Password input is now masked
+- Random strings and random port now use a cryptographically secure generator
+- Much faster CSS Prettify on large files (700KB: ~80s → <0.1s) and faster HTML Prettify
+- Faster extension startup: the HTML parser is loaded only when needed
+
 # 0.0.16
 ## 2026/02/19
 
